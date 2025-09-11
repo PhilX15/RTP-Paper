@@ -1,0 +1,4 @@
+name: RTP
+version: 1.0
+main: pl.philx.rtp.RTPPlugin
+api-version: 1.21
