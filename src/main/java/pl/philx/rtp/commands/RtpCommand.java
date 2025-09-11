@@ -10,19 +10,21 @@ import java.util.Random;
 
 @NullMarked
 public class RtpCommand implements BasicCommand {
+
     @Override
     public void execute(CommandSourceStack commandSourceStack, String[] args) {
         if (!(commandSourceStack.getSender() instanceof Player sender)) {
            return;
         }
 
-        Random randomNumberGenerator = new Random();
-        final int TELEPORT_RANGE = 500;
-
         Location playerLocation = sender.getLocation();
-        final int randomX = playerLocation.getBlockX() + getRandomCoordinate(randomNumberGenerator, TELEPORT_RANGE);
-        final int randomZ = playerLocation.getBlockZ() + getRandomCoordinate(randomNumberGenerator, TELEPORT_RANGE);
-        Location randomLocation = new Location(sender.getWorld(), randomX, 80, randomZ);
+        Random randomNumberGenerator = new Random();
+        int teleportRange = 500;
+        final int randomX = playerLocation.getBlockX() + getRandomCoordinate(randomNumberGenerator, teleportRange);
+        final int randomZ = playerLocation.getBlockZ() + getRandomCoordinate(randomNumberGenerator, teleportRange);
+
+        int oceanLevel = 63;
+        Location randomLocation = new Location(sender.getWorld(), randomX, oceanLevel, randomZ);
 
         sender.teleport(randomLocation);
     }
