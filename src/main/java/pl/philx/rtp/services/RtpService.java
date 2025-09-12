@@ -3,6 +3,7 @@ package pl.philx.rtp.services;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.jetbrains.annotations.NotNull;
 import pl.philx.rtp.config.RtpConfig;
 import pl.philx.rtp.exceptions.NoSafeLocationFoundException;
@@ -22,9 +23,11 @@ public class RtpService {
         Random randomNumberGenerator = new Random();
         while (attempts > 0) {
             Location randomLocation = pickRandomLocation(world, center, randomNumberGenerator);
-
-            if (isSafeLocation(world, randomLocation)) {
-                return randomLocation;
+            if (isAllowedBiome(randomLocation.getBlock().getBiome())) {
+                Location safeLocation = findSafeY(randomLocation);
+                if (safeLocation != null) {
+                    return safeLocation;
+                }
             }
 
             attempts--;
@@ -37,16 +40,35 @@ public class RtpService {
         final int randomX = center.getBlockX() + getRandomCoordinate(randomNumberGenerator, rtpConfig.getTeleportRange());
         final int randomZ = center.getBlockZ() + getRandomCoordinate(randomNumberGenerator, rtpConfig.getTeleportRange());
 
-        return new Location(world, randomX, rtpConfig.getOceanLevel(), randomZ);
+        return new Location(world, randomX, world.getMaxHeight(), randomZ);
     }
 
-    private boolean isSafeLocation(World world, Location location) {
-        Location blockUnder = location.clone().add(0, -1, 0);
-        Location blockAbove = location.clone().add(0, 1, 0);
-        return (location.getBlock().getType() == Material.AIR && blockAbove.getBlock().getType() == Material.AIR && !rtpConfig.getBiomeBlacklist().contains(world.getBiome(location)) && !rtpConfig.getBlockBlacklist().contains(blockUnder.getBlock().getType()));
+    private Location findSafeY(Location location) {
+        Location locationClone = location.clone();
+
+        while (locationClone.getBlockY() >= rtpConfig.getOceanLevel()) {
+            Location blockUnder = locationClone.clone().subtract(0, 1, 0);
+            Location blockAbove = locationClone.clone().add(0, 1, 0);
+
+            if (locationClone.getBlock().getType() == Material.AIR && blockAbove.getBlock().getType() == Material.AIR && isAllowedBlock(blockUnder.getBlock().getType())) {
+                return locationClone;
+            }
+
+            locationClone.add(0, -1, 0);
+        }
+
+        return null;
+    }
+
+    private boolean isAllowedBlock(Material block) {
+        return !rtpConfig.getBlockBlacklist().contains(block);
+    }
+
+    private boolean isAllowedBiome(Biome biome) {
+        return !rtpConfig.getBiomeBlacklist().contains(biome);
     }
 
     private int getRandomCoordinate(Random rng, int range) {
-        return rng.nextInt(2 * range) - range;
+        return rng.nextInt(2 * range + 1) - range;
     }
 }
