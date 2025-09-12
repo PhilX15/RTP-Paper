@@ -23,7 +23,7 @@ public class RtpService {
         while (attempts > 0) {
             Location randomLocation = pickRandomLocation(world, center, randomNumberGenerator);
 
-            if (isSafeLocation(randomLocation)) {
+            if (isSafeLocation(world, randomLocation)) {
                 return randomLocation;
             }
 
@@ -40,9 +40,10 @@ public class RtpService {
         return new Location(world, randomX, rtpConfig.getOceanLevel(), randomZ);
     }
 
-    private boolean isSafeLocation(Location location) {
+    private boolean isSafeLocation(World world, Location location) {
+        Location blockUnder = location.clone().add(0, -1, 0);
         Location blockAbove = location.clone().add(0, 1, 0);
-        return (location.getBlock().getType() == Material.AIR && blockAbove.getBlock().getType() == Material.AIR);
+        return (location.getBlock().getType() == Material.AIR && blockAbove.getBlock().getType() == Material.AIR && !rtpConfig.getBiomeBlacklist().contains(world.getBiome(location)) && !rtpConfig.getBlockBlacklist().contains(blockUnder.getBlock().getType()));
     }
 
     private int getRandomCoordinate(Random rng, int range) {
