@@ -12,6 +12,7 @@ import pl.philx.rtp.services.RtpService;
 import java.io.File;
 
 public class RTPPlugin extends JavaPlugin implements Listener {
+    private RtpConfig rtpConfig;
 
     @Override
     public void onEnable() {
@@ -20,13 +21,19 @@ public class RTPPlugin extends JavaPlugin implements Listener {
             saveResource("config.yml", false);
         }
 
-        RtpConfig rtpConfig = new RtpConfig(100, getConfig().getInt("rtp_range"), 63, 10);
+        rtpConfig = new RtpConfig(getConfig().getInt("rtp-range"), 63, 10);
         RtpService rtpService = new RtpService(rtpConfig);
 
         Bukkit.getPluginManager().registerEvents(this, this);
 
         registerCommand("rtp", new RtpCommand(rtpService));
-        registerCommand("reload", new ReloadCommand(this, rtpConfig));
-        registerCommand("setrange", new SetRangeCommand(this, rtpConfig));
+        registerCommand("reload", new ReloadCommand(this));
+        registerCommand("setrange", new SetRangeCommand(this));
+    }
+
+    public void setRTPRange(int range) {
+        rtpConfig.setTeleportRange(range);
+        getConfig().set("rtp-range", range);
+        saveConfig();
     }
 }

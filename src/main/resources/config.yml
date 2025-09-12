@@ -1,1 +1,3 @@
-rtp_range: 50
+min-rtp-range: 100
+max-rtp-range: 5000
+rtp-range: 500

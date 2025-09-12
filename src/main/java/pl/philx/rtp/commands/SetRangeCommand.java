@@ -4,15 +4,12 @@ import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.jetbrains.annotations.Nullable;
 import pl.philx.rtp.RTPPlugin;
-import pl.philx.rtp.config.RtpConfig;
 
 public class SetRangeCommand implements BasicCommand {
     private final RTPPlugin rtpPlugin;
-    private final RtpConfig rtpConfig;
 
-    public SetRangeCommand(RTPPlugin rtpPlugin, RtpConfig rtpConfig) {
+    public SetRangeCommand(RTPPlugin rtpPlugin) {
         this.rtpPlugin = rtpPlugin;
-        this.rtpConfig = rtpConfig;
     }
 
     @Override
@@ -25,19 +22,23 @@ public class SetRangeCommand implements BasicCommand {
         try {
             int range = Integer.parseInt(args[0]);
 
-            if (range < rtpConfig.getMinRange()) {
-                commandSourceStack.getSender().sendRichMessage("<red>RTP range cannot be less than " + rtpConfig.getMinRange() + " blocks</red>");
+            int minRange = rtpPlugin.getConfig().getInt("min-rtp-range");
+            int maxRange = rtpPlugin.getConfig().getInt("max-rtp-range");
+            if (!isValidRange(range, minRange, maxRange)) {
+                commandSourceStack.getSender().sendRichMessage("<red>RTP range must be between " + minRange + " and " + maxRange + "</red>");
                 return;
             }
 
-            rtpPlugin.getConfig().set("rtp_range", range);
-            rtpPlugin.saveConfig();
-            rtpConfig.setTeleportRange(range);
+            rtpPlugin.setRTPRange(range);
 
             commandSourceStack.getSender().sendRichMessage("<green>RTP range successfully changed</green>");
         } catch (NumberFormatException e) {
             commandSourceStack.getSender().sendRichMessage("<red>Invalid range!</red>");
         }
+    }
+
+    private boolean isValidRange(int range, int minRange, int maxRange) {
+        return range >= minRange && range <= maxRange;
     }
 
     @Override
