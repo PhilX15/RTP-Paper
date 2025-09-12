@@ -11,7 +11,9 @@ public class RTPPlugin extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        RtpConfig rtpConfig = new RtpConfig(50, 63, 10);
+        saveResource("config.yml", false);
+
+        RtpConfig rtpConfig = new RtpConfig(getConfig().getInt("rtp_range"), 63, 10);
         RtpService rtpService = new RtpService(rtpConfig);
 
         Bukkit.getPluginManager().registerEvents(this, this);
