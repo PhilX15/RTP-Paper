@@ -15,3 +15,11 @@ permissions:
   rtp.setrange:
     description: Grants access to /setrange <range> command
     default: op
+  rtp.*:
+    description: Grants access to all RTPPlugin commands
+    default: op
+    children:
+      rtp.rtp.use: true
+      rtp.rtp.bypasscooldown: true
+      rtp.reload: true
+      rtp.setrange: true
