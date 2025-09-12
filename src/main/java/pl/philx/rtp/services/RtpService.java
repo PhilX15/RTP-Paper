@@ -37,8 +37,8 @@ public class RtpService {
     }
 
     private @NotNull Location pickRandomLocation(World world, Location center, Random randomNumberGenerator) {
-        final int randomX = center.getBlockX() + getRandomCoordinate(randomNumberGenerator, rtpConfig.getTeleportRange());
-        final int randomZ = center.getBlockZ() + getRandomCoordinate(randomNumberGenerator, rtpConfig.getTeleportRange());
+        final double randomX = center.getBlockX() + getRandomCoordinate(randomNumberGenerator, rtpConfig.getTeleportRange()) + 0.5;
+        final double randomZ = center.getBlockZ() + getRandomCoordinate(randomNumberGenerator, rtpConfig.getTeleportRange()) + 0.5;
 
         return new Location(world, randomX, world.getMaxHeight(), randomZ);
     }

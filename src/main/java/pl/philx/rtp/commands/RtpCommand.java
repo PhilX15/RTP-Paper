@@ -5,6 +5,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import pl.philx.rtp.exceptions.NoSafeLocationFoundException;
 import pl.philx.rtp.services.RtpService;
 
@@ -31,5 +32,10 @@ public class RtpCommand implements BasicCommand {
         } catch (NoSafeLocationFoundException e) {
             sender.sendRichMessage("<red>Unable to find a safe place to teleport</red>");
         }
+    }
+
+    @Override
+    public @Nullable String permission() {
+        return "rtp.rtp.use";
     }
 }
