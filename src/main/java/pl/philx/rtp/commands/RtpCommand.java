@@ -34,7 +34,7 @@ public class RtpCommand implements BasicCommand {
         sender.sendRichMessage("<yellow>Teleporting...</yellow>");
 
         try {
-            Location destination = rtpService.findSafeLocation(sender.getWorld(), sender.getLocation());
+            Location destination = rtpService.findSafeLocation(sender.getWorld(), sender.getWorld().getSpawnLocation());
             sender.sendRichMessage("<green>Successful teleport</green>");
             sender.teleport(destination);
             rtpService.enableCooldown(sender.getUniqueId());
