@@ -50,7 +50,7 @@ public class RtpService {
             Location blockUnder = locationClone.clone().subtract(0, 1, 0);
             Location blockAbove = locationClone.clone().add(0, 1, 0);
 
-            if (locationClone.getBlock().getType() == Material.AIR && blockAbove.getBlock().getType() == Material.AIR && isAllowedBlock(blockUnder.getBlock().getType())) {
+            if (locationClone.getBlock().getType() == Material.AIR && blockAbove.getBlock().getType() == Material.AIR && isAllowedBlock(blockUnder.getBlock().getType()) && blockUnder.getBlock().isSolid()) {
                 return locationClone;
             }
 
