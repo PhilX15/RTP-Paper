@@ -5,4 +5,7 @@ api-version: 1.21
 permissions:
   rtp.rtp.use:
     description: Grants access to /rtp command
+    default: true
+  rtp.reload:
+    description: Grants access to /reload command
     default: op
