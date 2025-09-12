@@ -21,7 +21,7 @@ public class RTPPlugin extends JavaPlugin implements Listener {
             saveResource("config.yml", false);
         }
 
-        rtpConfig = new RtpConfig(getConfig().getInt("rtp-range"), 63, 10);
+        rtpConfig = new RtpConfig(getConfig().getLong("rtp-cooldown"), getConfig().getInt("rtp-range"), 63, 10);
         RtpService rtpService = new RtpService(rtpConfig);
 
         Bukkit.getPluginManager().registerEvents(this, this);
@@ -31,9 +31,15 @@ public class RTPPlugin extends JavaPlugin implements Listener {
         registerCommand("setrange", new SetRangeCommand(this));
     }
 
-    public void setRTPRange(int range) {
+    public void updateRange(int range) {
         rtpConfig.setTeleportRange(range);
         getConfig().set("rtp-range", range);
+        saveConfig();
+    }
+
+    public void updateCooldown(Long cooldown) {
+        rtpConfig.setTeleportCooldown(cooldown);
+        getConfig().set("rtp-cooldown", cooldown);
         saveConfig();
     }
 }

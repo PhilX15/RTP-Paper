@@ -8,13 +8,29 @@ import org.jetbrains.annotations.NotNull;
 import pl.philx.rtp.config.RtpConfig;
 import pl.philx.rtp.exceptions.NoSafeLocationFoundException;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 
 public class RtpService {
     private final RtpConfig rtpConfig;
+    private final Map<UUID, Long> cooldowns = new HashMap<>();
 
     public RtpService(RtpConfig rtpConfig) {
         this.rtpConfig = rtpConfig;
+    }
+
+    public void enableCooldown(UUID uuid) {
+        cooldowns.put(uuid, System.currentTimeMillis());
+    }
+
+    public Long getCooldown(UUID uuid) {
+        if (!cooldowns.containsKey(uuid)) {
+            return 0L;
+        }
+
+        return ((cooldowns.get(uuid) + rtpConfig.getTeleportCooldown() * 1000) - System.currentTimeMillis());
     }
 
     public Location findSafeLocation(World world, Location center) throws NoSafeLocationFoundException {

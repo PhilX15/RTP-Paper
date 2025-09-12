@@ -29,7 +29,7 @@ public class SetRangeCommand implements BasicCommand {
                 return;
             }
 
-            rtpPlugin.setRTPRange(range);
+            rtpPlugin.updateRange(range);
 
             commandSourceStack.getSender().sendRichMessage("<green>RTP range successfully changed</green>");
         } catch (NumberFormatException e) {

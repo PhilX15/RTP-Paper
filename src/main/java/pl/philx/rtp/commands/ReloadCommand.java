@@ -15,7 +15,8 @@ public class ReloadCommand implements BasicCommand {
     @Override
     public void execute(CommandSourceStack commandSourceStack, String[] args) {
         rtpPlugin.reloadConfig();
-        rtpPlugin.setRTPRange(rtpPlugin.getConfig().getInt("rtp-range"));
+        rtpPlugin.updateRange(rtpPlugin.getConfig().getInt("rtp-range"));
+        rtpPlugin.updateCooldown(rtpPlugin.getConfig().getLong("rtp-cooldown"));
         commandSourceStack.getSender().sendRichMessage("<green>RTPPlugin configuration reloaded successfully</green>");
     }
 

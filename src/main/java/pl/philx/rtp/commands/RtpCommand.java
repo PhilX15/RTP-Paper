@@ -23,12 +23,21 @@ public class RtpCommand implements BasicCommand {
             return;
         }
 
+        if (!sender.hasPermission("rtp.rtp.bypasscooldown")) {
+            long cooldown = rtpService.getCooldown(sender.getUniqueId()) / 1000L;
+            if (cooldown > 0) {
+                sender.sendRichMessage("<red>You must wait " + cooldown + " second(s) before using /rtp again</red>");
+                return;
+            }
+        }
+
         sender.sendRichMessage("<yellow>Teleporting...</yellow>");
 
         try {
             Location destination = rtpService.findSafeLocation(sender.getWorld(), sender.getLocation());
             sender.sendRichMessage("<green>Successful teleport</green>");
             sender.teleport(destination);
+            rtpService.enableCooldown(sender.getUniqueId());
         } catch (NoSafeLocationFoundException e) {
             sender.sendRichMessage("<red>Unable to find a safe place to teleport</red>");
         }

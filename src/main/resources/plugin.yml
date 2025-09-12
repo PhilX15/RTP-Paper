@@ -6,6 +6,9 @@ permissions:
   rtp.rtp.use:
     description: Grants access to /rtp command
     default: true
+  rtp.rtp.bypasscooldown:
+    description: Bypasses the /rtp cooldown
+    default: op
   rtp.reload:
     description: Grants access to /reload command
     default: op
