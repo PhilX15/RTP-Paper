@@ -9,3 +9,6 @@ permissions:
   rtp.reload:
     description: Grants access to /reload command
     default: op
+  rtp.setrange:
+    description: Grants access to /setrange <range> command
+    default: op
