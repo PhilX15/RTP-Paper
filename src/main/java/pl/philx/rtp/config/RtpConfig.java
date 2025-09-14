@@ -7,15 +7,46 @@ import java.util.List;
 
 public class RtpConfig {
     private Long teleportCooldown;
+    private int minTeleportRange;
+    private int maxTeleportRange;
     private int teleportRange;
     private final int oceanLevel;
     private final int teleportAttempts;
-    private final List<Material> blockBlacklist = List.of(Material.AIR, Material.MAGMA_BLOCK, Material.LAVA, Material.WATER, Material.BEDROCK, Material.POWDER_SNOW, Material.CAMPFIRE, Material.FIRE, Material.BIG_DRIPLEAF, Material.SOUL_CAMPFIRE, Material.ACACIA_LEAVES, Material.AZALEA_LEAVES, Material.BIRCH_LEAVES, Material.CHERRY_LEAVES, Material.FLOWERING_AZALEA_LEAVES, Material.JUNGLE_LEAVES, Material.MANGROVE_LEAVES, Material.OAK_LEAVES, Material.DARK_OAK_LEAVES, Material.PALE_OAK_LEAVES, Material.SPRUCE_LEAVES);
-    private final List<Biome> biomeBlacklist = List.of(Biome.OCEAN, Biome.COLD_OCEAN, Biome.DEEP_COLD_OCEAN, Biome.DEEP_OCEAN, Biome.DEEP_FROZEN_OCEAN, Biome.DEEP_LUKEWARM_OCEAN, Biome.LUKEWARM_OCEAN, Biome.WARM_OCEAN);
+    private final List<Material> blockBlacklist = List.of(
+            Material.AIR,
+            Material.MAGMA_BLOCK,
+            Material.LAVA,
+            Material.WATER,
+            Material.BEDROCK,
+            Material.POWDER_SNOW,
+            Material.CAMPFIRE,
+            Material.FIRE,
+            Material.BIG_DRIPLEAF,
+            Material.SOUL_CAMPFIRE,
+            Material.ACACIA_LEAVES,
+            Material.AZALEA_LEAVES,
+            Material.BIRCH_LEAVES,
+            Material.CHERRY_LEAVES,
+            Material.FLOWERING_AZALEA_LEAVES,
+            Material.JUNGLE_LEAVES,
+            Material.MANGROVE_LEAVES,
+            Material.OAK_LEAVES,
+            Material.DARK_OAK_LEAVES,
+            Material.PALE_OAK_LEAVES,
+            Material.SPRUCE_LEAVES
+    );
+    private final List<Biome> biomeBlacklist = List.of(
+            Biome.OCEAN,
+            Biome.COLD_OCEAN,
+            Biome.DEEP_COLD_OCEAN,
+            Biome.DEEP_OCEAN,
+            Biome.DEEP_FROZEN_OCEAN,
+            Biome.DEEP_LUKEWARM_OCEAN,
+            Biome.LUKEWARM_OCEAN,
+            Biome.WARM_OCEAN
+    );
 
-    public RtpConfig(Long teleportCooldown, int teleportRange, int oceanLevel, int teleportAttempts) {
-        this.teleportCooldown = teleportCooldown;
-        this.teleportRange = teleportRange;
+    public RtpConfig(int oceanLevel, int teleportAttempts) {
         this.oceanLevel = oceanLevel;
         this.teleportAttempts = teleportAttempts;
     }
@@ -28,12 +59,28 @@ public class RtpConfig {
         this.teleportCooldown = teleportCooldown;
     }
 
-    public void setTeleportRange(int teleportRange) {
-        this.teleportRange = teleportRange;
+    public int getMinTeleportRange() {
+        return minTeleportRange;
+    }
+
+    public void setMinTeleportRange(int minTeleportRange) {
+        this.minTeleportRange = minTeleportRange;
+    }
+
+    public int getMaxTeleportRange() {
+        return maxTeleportRange;
+    }
+
+    public void setMaxTeleportRange(int maxTeleportRange) {
+        this.maxTeleportRange = maxTeleportRange;
     }
 
     public int getTeleportRange() {
         return teleportRange;
+    }
+
+    public void setTeleportRange(int teleportRange) {
+        this.teleportRange = teleportRange;
     }
 
     public int getOceanLevel() {

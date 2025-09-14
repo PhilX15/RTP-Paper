@@ -1,15 +1,17 @@
 package pl.philx.rtp.commands;
 
-import io.papermc.paper.command.brigadier.BasicCommand;
-import io.papermc.paper.command.brigadier.CommandSourceStack;
+import io.papermc.paper.command.brigadier.*;
 import org.jetbrains.annotations.Nullable;
 import pl.philx.rtp.RTPPlugin;
+import pl.philx.rtp.config.RtpConfig;
 
 public class SetRangeCommand implements BasicCommand {
     private final RTPPlugin rtpPlugin;
+    private final RtpConfig rtpConfig;
 
     public SetRangeCommand(RTPPlugin rtpPlugin) {
         this.rtpPlugin = rtpPlugin;
+        this.rtpConfig = rtpPlugin.getRtpConfig();
     }
 
     @Override
@@ -22,8 +24,8 @@ public class SetRangeCommand implements BasicCommand {
         try {
             int range = Integer.parseInt(args[0]);
 
-            int minRange = rtpPlugin.getConfig().getInt("min-rtp-range");
-            int maxRange = rtpPlugin.getConfig().getInt("max-rtp-range");
+            int minRange = rtpConfig.getMinTeleportRange();
+            int maxRange = rtpConfig.getMaxTeleportRange();
             if (!isValidRange(range, minRange, maxRange)) {
                 commandSourceStack.getSender().sendRichMessage("<red>RTP range must be between " + minRange + " and " + maxRange + "</red>");
                 return;

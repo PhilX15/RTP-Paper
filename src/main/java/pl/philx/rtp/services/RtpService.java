@@ -1,8 +1,6 @@
 package pl.philx.rtp.services;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.jetbrains.annotations.NotNull;
 import pl.philx.rtp.config.RtpConfig;

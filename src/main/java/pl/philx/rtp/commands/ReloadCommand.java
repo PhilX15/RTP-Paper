@@ -1,7 +1,6 @@
 package pl.philx.rtp.commands;
 
-import io.papermc.paper.command.brigadier.BasicCommand;
-import io.papermc.paper.command.brigadier.CommandSourceStack;
+import io.papermc.paper.command.brigadier.*;
 import org.jspecify.annotations.Nullable;
 import pl.philx.rtp.RTPPlugin;
 
@@ -15,8 +14,7 @@ public class ReloadCommand implements BasicCommand {
     @Override
     public void execute(CommandSourceStack commandSourceStack, String[] args) {
         rtpPlugin.reloadConfig();
-        rtpPlugin.updateRange(rtpPlugin.getConfig().getInt("rtp-range"));
-        rtpPlugin.updateCooldown(rtpPlugin.getConfig().getLong("rtp-cooldown"));
+        rtpPlugin.loadFromConfig();
         commandSourceStack.getSender().sendRichMessage("<green>RTPPlugin configuration reloaded successfully</green>");
     }
 
