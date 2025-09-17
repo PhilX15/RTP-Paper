@@ -17,12 +17,12 @@ You can find the output in the build/libs directory.
 
 ## 📜 Commands
 - **/rtp** - teleports to a random location within a specified range
-- **/setrange <range>** - sets the range for random teleportation
+- **/setrange &lt;range&gt;** - sets the range for random teleportation
 - **/reload** - reloads the config.yml file
 
 ## 🔑 Permissions
 - **rtp.rtp.use** - Grants access to /rtp command
 - **rtp.rtp.bypasscooldown** - Bypasses the /rtp cooldown
-- **rtp.setrange** - Grants access to /setrange <range> command
+- **rtp.setrange** - Grants access to /setrange &lt;range&gt; command
 - **rtp.reload** - Grants access to /reload command
 - **rtp.*** - Grants access to all plugin permissions
