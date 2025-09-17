@@ -16,7 +16,7 @@ permissions:
     description: Grants access to /setrange <range> command
     default: op
   rtp.*:
-    description: Grants access to all RTPPlugin commands
+    description: Grants access to all plugin permissions
     default: op
     children:
       rtp.rtp.use: true
